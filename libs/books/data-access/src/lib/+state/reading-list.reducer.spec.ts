@@ -36,7 +36,6 @@ describe('Books Reducer', () => {
       const action = ReadingListActions.failedAddToReadingList({
         book: createBook('B')
       });
-
       const result: State = reducer(state, action);
 
       expect(result.ids).toEqual(['A']);
@@ -51,6 +50,37 @@ describe('Books Reducer', () => {
 
       expect(result.ids).toEqual(['A', 'B', 'C']);
     });
+
+    it('markBookAsFinished should update the finished status in reading list', () => {
+      const action = ReadingListActions.markBookAsFinished({
+        update: {
+          id: 'B',
+          changes: {
+            finished: true,
+            finishedDate: new Date().toISOString()
+          }
+        }
+      })
+
+      const result: State = reducer(state, action);
+      expect(result.entities['B'].finished).toBe(true);
+    });
+
+    it('failedToMarkBookAsFinished should not update the book as finished', () => {
+      const action = ReadingListActions.failedToMarkBookAsFinished({
+        update: {
+          id: 'B',
+          changes: {
+            finished: true,
+            finishedDate: new Date().toISOString()
+          }
+        }
+      })
+      
+      const result: State = reducer(state, action);
+      expect(result.entities['B'].finished).toBe(false || undefined);
+    })
+    
   });
 
   describe('unknown action', () => {

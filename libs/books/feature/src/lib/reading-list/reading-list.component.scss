@@ -45,3 +45,25 @@
   font-size: 1rem;
   color: $gray60;
 }
+
+.mark-btn {
+  width: 25px;
+  height: 25px;  
+  line-height: 22px;
+  margin: 5px;
+}
+
+.mat-success {
+  color: white;
+  background: green;
+}
+
+.mat-pending {
+  color: white;
+  background: gray;
+}
+
+.reading-list-item--details-finished-info {
+  color: green;
+  font-style: italic;
+}
