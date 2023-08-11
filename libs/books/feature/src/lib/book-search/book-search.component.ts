@@ -7,7 +7,7 @@ import {
   ReadingListBook,
   searchBooks
 } from '@tmo/books/data-access';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
 
 @Component({
@@ -27,8 +27,12 @@ export class BookSearchComponent implements OnInit {
     private readonly fb: FormBuilder
   ) {}
 
+  set searchTerm(term: string) {
+    this.searchForm.setValue({term});
+  }
+  
   get searchTerm(): string {
-    return this.searchForm.value.term;
+    return (this.searchForm.get('term') as FormControl).value;
   }
 
   ngOnInit(): void {
@@ -48,7 +52,7 @@ export class BookSearchComponent implements OnInit {
   }
 
   searchExample() {
-    this.searchForm.controls.term.setValue('javascript');
+    this.searchTerm = 'javascript';
     this.searchBooks();
   }
 
@@ -58,5 +62,9 @@ export class BookSearchComponent implements OnInit {
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  trackByFn(item: Book): string {
+    return item.id;
   }
 }
