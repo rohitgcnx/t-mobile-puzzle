@@ -6,22 +6,23 @@
       type="search"
       placeholder="Search for books to add to your reading list"
       formControlName="term"
+      aria-describedby="search-desc"
     />
-    <button mat-icon-button matSuffix>
-      <mat-icon>search</mat-icon>
+    <button mat-icon-button matSuffix aria-label="search" role="button">
+      <mat-icon aria-hidden="true">search</mat-icon>
     </button>
   </mat-form-field>
 </form>
 
 <ng-container *ngIf="searchTerm; else empty">
-  <div class="book-grid">
-    <div class="book" data-testing="book-item" *ngFor="let b of books">
+  <div class="book-grid" role="tablist">
+    <div class="book" data-testing="book-item" *ngFor="let b of books; trackBy: trackByFn;" tabindex="0">
       <div class="book--title">
         {{ b.title }}
       </div>
       <div class="book--content">
         <div class="book--content--cover">
-          <img src="{{ b.coverUrl }}" />
+          <img src="{{ b.coverUrl }}" alt="{{b.title}}"/>
         </div>
         <div class="book--content--info">
           <div><strong>Author:</strong> {{ b.authors.join(',') }}</div>
@@ -36,6 +37,7 @@
               color="primary"
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
+              aria-label="want to read"
             >
               Want to Read
             </button>
@@ -48,7 +50,7 @@
 <ng-template #empty>
   <div class="empty">
     <p>
-      Try searching for a topic, for example "<a (click)="searchExample()"
+      Try searching for a topic, for example "<a title="Try searching by clicking on JavaScript" (click)="searchExample()"
         >JavaScript</a
       >".
     </p>
