@@ -7,6 +7,7 @@
       placeholder="Search for books to add to your reading list"
       formControlName="term"
       aria-describedby="search-desc"
+      tabindex="1"
     />
     <button mat-icon-button matSuffix aria-label="search" role="button">
       <mat-icon aria-hidden="true">search</mat-icon>
@@ -16,7 +17,7 @@
 
 <ng-container *ngIf="searchTerm; else empty">
   <div class="book-grid" role="tablist">
-    <div class="book" data-testing="book-item" *ngFor="let b of books; trackBy: trackByFn;" tabindex="0">
+    <div class="book" data-testing="book-item" *ngFor="let b of books; let idxBook = index; trackBy: trackByFn;" tabindex="0">
       <div class="book--title">
         {{ b.title }}
       </div>
@@ -38,6 +39,7 @@
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
               aria-label="want to read"
+              [attr.data-btn-id]="idxBook"
             >
               Want to Read
             </button>
@@ -50,9 +52,7 @@
 <ng-template #empty>
   <div class="empty">
     <p>
-      Try searching for a topic, for example "<a title="Try searching by clicking on JavaScript" (click)="searchExample()"
-        >JavaScript</a
-      >".
+      Try searching for a topic, for example "<a title="Try searching by clicking on JavaScript" (click)="searchExample()">JavaScript</a>".
     </p>
   </div>
 </ng-template>
