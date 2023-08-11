@@ -24,4 +24,15 @@ describe('ProductsListComponent', () => {
   it('should create', () => {
     expect(component).toBeDefined();
   });
+
+  it('should update searchterm variable on input change', () => {
+    const app = fixture.debugElement.componentInstance
+    const el = fixture.nativeElement.querySelector('input');
+    el.value = 'java';
+    el.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(app.searchTerm).toBe('java');
+    });
+  })
 });
